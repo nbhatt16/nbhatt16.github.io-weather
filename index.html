@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather</title>
+</head>
+<body>
+    <div class= "Container"> <h1>City Search</h1>
+    <div id="buttons view"></div>
+    <form id="city-form">
+        <label for="city-input">Add City</label>
+        <input type="text"id="city-input">
+        <br>
+        <input id="add-city" type="submit" value="add city">
+    </form>
+    
+    <div id="city-view"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    
+    var cities = ["Toronto", "New York", "London"];
+
+    function displayCityInfo() {
+
+        var city = $(this).attr("data-name");
+        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&apikey=e690b42714166f5025464e2332b4e39f";
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function(reponse){
+            var cityDiv =$("<div class='city>'");
+        
+        var weather = reponse.Main.temp;
+        
+        var pOne = $("<p>").text("Weather:" + weather);
+    
+         cityDiv.append(pOne);
+
+         var max = response.Main.temp_max;  
+
+        
+        var ptwo = $("<p>").text("Temp max" + temp_max);
+
+        cityDiv.append(pTwo);
+
+        var mix = reponse.Main.temp_min;
+
+        var pThree = $("<p>").text("Temp min" + temp_min);
+
+        cityDiv.append(pThree);
+
+        $("#city-view").prepend(cityDiv);
+        });
+    }
+
+    function renderButtons() {
+        $("#buttons-view").empty();
+
+        for (var i = 0; < cities.length; i++) {
+
+        var a = $("<button>");
+        
+            a.addClass("city-btn");
+            a.attr("data-name", cities[i]);
+            a.text(cities[i]);
+            $("buttons-view").append(a);
+        }
+    }
+    $("add-city").on("click", function(event){
+        event.preventDefault();
+
+        var city = $("city-input").val().trim();
+
+        cities.push(city);
+
+        renderButtons();
+
+    });
+
+    $(document).on("click",".city-btn", displayCityInfo);
+
+    renderButtons();
+
+    </script>
+    
+
+    </div>
+</body>
+</html>
