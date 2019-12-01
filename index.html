@@ -55,6 +55,13 @@
         cityDiv.append(pThree);
 
         $("#city-view").prepend(cityDiv);
+
+        var name = response.Name;
+
+        var pFour = $("<p>").text("City name" + name);
+        
+        cityDiv.append(pFour);
+    
         });
     }
 
